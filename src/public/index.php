@@ -18,7 +18,15 @@ include ('vendor/autoload.php');
 $faker = Faker\Factory::create('pt_BR');
 
 $nome = $faker->name();
-//$response = $client->request('GET', 'https://g1.com.br');
+
+use GuzzleHttp\Client;
+$client = new Client();
+$chave = '30e6fb6e505c467c975141351230507';
+$response = $client->request('GET', 'https://api.weatherapi.com/v1/current.json?q=mossoro&key=' . $chave);
+$tempo = $response->getBody();
+$tempo = json_decode($tempo);
+
+print_r($tempo);
 //echo $response->getStatusCode(); // 200
 //echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
 //echo $response->getBody(); // '{"id": 1420053, "name": "guzzle", ...}'
